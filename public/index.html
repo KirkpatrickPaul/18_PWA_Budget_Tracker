@@ -54,7 +54,17 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="./assets/js/index.js"></script>
-    <!-- <script src="../dist/bundle.js"></script> -->
+    <script src="../dist/app.bundle.js"></script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('./dist/sw.bundle.js')
+            .then((reg) => {
+              console.log('Service Worker Active!', reg);
+            });
+        });
+      }
+    </script>
   </body>
 </html>
