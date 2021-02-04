@@ -1,0 +1,15 @@
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
+ */
+/******/ (() => { // webpackBootstrap
+/*!********************************************!*\
+  !*** ./public/assets/js/service-worker.js ***!
+  \********************************************/
+eval("var CACHE_NAME = 'static-cache-v2';\nvar DATA_CACHE_NAME = 'data-cache-v2';\nvar FILES_TO_CACHE = ['/', '/dist/app.bundle.js', '/dist/manifest.json', '/assets/css/styles.css', '/dist/assets/icons/icon_192x192.png', '/dist/assets/icons/icon_512x512.png', 'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css', 'https://cdn.jsdelivr.net/npm/chart.js@2.8.0'];\nself.addEventListener('install', function (event) {\n  event.waitUntil(caches.open(CACHE_NAME).then(function (cache) {\n    return cache.addAll(FILES_TO_CACHE);\n  }).then(function () {\n    return self.skipWaiting();\n  }));\n});\nself.addEventListener('activate', function (event) {\n  event.waitUntil(caches.keys().then(function (keyList) {\n    return Promise.all(keyList.map(function (key) {\n      if (key !== CACHE_NAME && key !== DATA_CACHE_NAME) {\n        return caches[\"delete\"](key);\n      }\n    }));\n  }));\n  self.clients.claim();\n});\nself.addEventListener('activate', function (event) {\n  event.waitUntil(caches.keys().then(function (keyList) {\n    return Promise.all(keyList.map(function (key) {\n      if (key !== CACHE_NAME && key !== DATA_CACHE_NAME) {\n        console.log('Removing old cache data', key);\n        return caches[\"delete\"](key);\n      }\n    }));\n  }));\n  self.clients.claim();\n});\nself.addEventListener('fetch', function (evt) {\n  var url = evt.request.url;\n\n  if (url.includes('/api/')) {\n    evt.respondWith(caches.open(DATA_CACHE_NAME).then(function (cache) {\n      return fetch(evt.request).then(function (response) {\n        // If the response was good, clone it and store it in the cache.\n        if (response.status === 200) {\n          cache.put(evt.request, response.clone());\n        }\n\n        return response;\n      })[\"catch\"](function (err) {\n        return cache.match(evt.request);\n      });\n    })[\"catch\"](function (err) {\n      return console.log(err);\n    }));\n  } else {\n    // respond from static cache, request is not for /api/*\n    evt.respondWith(caches.open(CACHE_NAME).then(function (cache) {\n      return cache.match(evt.request).then(function (response) {\n        return response || fetch(evt.request);\n      });\n    }));\n  }\n});\n\n//# sourceURL=webpack://budget-app/./public/assets/js/service-worker.js?");
+/******/ })()
+;

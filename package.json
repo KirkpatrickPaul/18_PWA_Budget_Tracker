@@ -1,12 +1,12 @@
 {
   "name": "budget-app",
-  "version": "1.0.1",
-  "description": "",
+  "version": "1.0.0",
+  "description": "An application that allows you to track your budget by adding or subtracting money.",
   "main": "server.js",
   "scripts": {
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prestart": "npm run webpack",
+    "prestart": "npm run build",
     "start": "node server.js",
     "lite-server": "lite-server"
   },

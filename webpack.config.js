@@ -28,18 +28,19 @@ const config = {
   plugins: [
     new WebpackPwaManifest({
       fingerprints: false,
+      inject: false,
+      display: 'standalone',
       name: 'Budget Tracker App',
       short_name: 'Budget',
       description:
         'An application that allows you to track your budget by adding or subtracting money.',
       background_color: '#01579b',
       theme_color: '#317EFB',
-      'theme-color': '#317EFB',
       start_url: '/',
-      icons: [
+      icon: [
         {
-          src: path.resolve('assets/icons/icon.png'),
-          sizes: [192, 512],
+          src: path.resolve('public/assets/icons/icon.png'),
+          size: [192, 512],
           destination: path.join('assets', 'icons')
         }
       ]

@@ -1,0 +1,22 @@
+{
+  "icons": [
+    {
+      "src": "auto/icon_512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
+      "src": "auto/icon_192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "name": "Budget Tracker App",
+  "short_name": "Budget",
+  "orientation": "portrait",
+  "display": "standalone",
+  "start_url": "/",
+  "description": "An application that allows you to track your budget by adding or subtracting money.",
+  "background_color": "#01579b",
+  "theme_color": "#317EFB"
+}
