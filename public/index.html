@@ -15,7 +15,7 @@
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link rel="stylesheet" href="./assets/css/styles.css" />
     <link rel="manifest" href="./dist/manifest.json" />
     <title>Budget Tracker</title>
   </head>
@@ -54,15 +54,14 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-    <script src="../dist/app.bundle.js"></script>
+    <script src="./dist/app.bundle.js"></script>
+    <script src="./assets/js/indexedDB.js"></script>
     <script>
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker
-            .register('./dist/sw.bundle.js')
-            .then((reg) => {
-              console.log('Service Worker Active!', reg);
-            });
+          navigator.serviceWorker.register('service-worker.js', {
+            scope: '/'
+          });
         });
       }
     </script>

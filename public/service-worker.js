@@ -1,8 +1,9 @@
-const CACHE_NAME = 'static-cache-v2';
-const DATA_CACHE_NAME = 'data-cache-v2';
+const CACHE_NAME = 'static-cache-v3';
+const DATA_CACHE_NAME = 'data-cache-v3';
 
 const FILES_TO_CACHE = [
   '/',
+  '/index.html',
   '/dist/app.bundle.js',
   '/dist/manifest.json',
   '/assets/css/styles.css',
@@ -11,13 +12,13 @@ const FILES_TO_CACHE = [
   'https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css',
   'https://cdn.jsdelivr.net/npm/chart.js@2.8.0'
 ];
-
+console.log('Service Worker');
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
       .open(CACHE_NAME)
       .then((cache) => cache.addAll(FILES_TO_CACHE))
-      .then(() => self.skipWaiting())
+      .then(self.skipWaiting())
   );
 });
 
@@ -43,7 +44,6 @@ self.addEventListener('activate', function (event) {
       return Promise.all(
         keyList.map((key) => {
           if (key !== CACHE_NAME && key !== DATA_CACHE_NAME) {
-            console.log('Removing old cache data', key);
             return caches.delete(key);
           }
         })
@@ -61,23 +61,30 @@ self.addEventListener('fetch', function (evt) {
       caches
         .open(DATA_CACHE_NAME)
         .then((cache) => {
-          return fetch(evt.request)
-            .then((response) => {
-              // If the response was good, clone it and store it in the cache.
-              if (response.status === 200) {
-                cache.put(evt.request, response.clone());
-              }
+          if (navigator.onLine) {
+            return fetch(evt.request)
+              .then((response) => {
+                if (response.status === 200) {
+                  cache.put(evt.request, response.clone());
+                }
 
-              return response;
-            })
-            .catch((err) => {
-              return cache.match(evt.request);
-            });
+                return response;
+              })
+              .catch((err) => {
+                return cache.match(evt.request);
+              });
+          } else {
+            return useIndexedDB(
+              'pending',
+              'store',
+              evt.request.method,
+              evt.request
+            );
+          }
         })
         .catch((err) => console.log(err))
     );
   } else {
-    // respond from static cache, request is not for /api/*
     evt.respondWith(
       caches.open(CACHE_NAME).then((cache) => {
         return cache.match(evt.request).then((response) => {

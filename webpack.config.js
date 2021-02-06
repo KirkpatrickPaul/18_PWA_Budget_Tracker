@@ -4,7 +4,6 @@ const path = require('path');
 const config = {
   entry: {
     app: './public/assets/js/index.js',
-    sw: './public/assets/js/service-worker.js'
   },
   output: {
     path: __dirname + '/public/dist',

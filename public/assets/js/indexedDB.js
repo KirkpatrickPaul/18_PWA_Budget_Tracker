@@ -1,16 +1,9 @@
 //this file is taken from class-repo/18-PWA/01-Activites/23-Stu-Mini-Project/Solved/client/assets/js/indexedDB.js
 
-export function checkForIndexedDb() {
-  if (!window.indexedDB) {
-    console.log("Your browser doesn't support a stable version of IndexedDB.");
-    return false;
-  }
-  return true;
-}
-
-export function useIndexedDb(databaseName, storeName, method, object) {
+function useIndexedDB(databaseName, storeName, method, object) {
   return new Promise((resolve, reject) => {
-    const request = window.indexedDB.open(databaseName, 1);
+    console.log('useIndexedDB', method);
+    const request = window.indexedDB.open(databaseName, 3);
     let db, tx, store;
 
     request.onupgradeneeded = function (e) {
